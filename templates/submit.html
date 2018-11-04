@@ -1,0 +1,102 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<body>
+
+<style>
+body {background-color: #323437;
+      font-family: Sans-Serif;}
+textarea {resize: none;
+          font-family: Sans-Serif;
+          font-size: 16px;}
+button {font-size: 32px;}
+b {font-size: 16px;}
+p {background-color: #fefefe;}
+nav {background-color: #fefefe; width: 75%;}
+.noNamePopup {position: relative;
+              display: inline-block;
+              cursor: pointer;}
+</style>
+
+<center><nav>
+    <center><p>
+        <b>Upload video:</b>
+        <br>
+        <input type="file" id="myFile" multiple size="50" onchange="uploadFile()">
+        <br>
+        <br>
+        <input type="text" id="nameField" name="name" size=60% placeholder="Name (leave blank to be anonymous)">
+        <br>
+        <input type="text" id="contactField" name="contactInfo" size=60% placeholder="Contact info (email or phone)">
+        <br>
+        <br>
+        <textarea name="storyText" id="storyField" style="width: 60%; height: auto;" rows="10" placeholder="Story text" onKeyUp="restoreStoryField()"></textarea>
+    </p>
+
+    <video width = 50% height = auto controls id="video"></video>
+
+    <p><button onclick="submitStory()"> Submit </button><p></center>
+</nav></center>
+
+<script type="text/javascript">
+    function uploadFile() {
+        var x = document.getElementById("myFile");
+        var reader = new FileReader();
+        var file = null;
+
+        if ('files' in x && x.files.length > 0) {
+            for (var i = 0; i < x.files.length; i++) {
+                if('type' in x.files[i] && x.files[i].type == "video/mp4") {
+                    var file = x.files[i];
+                }
+            }
+        }
+
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            document.getElementById("video").innerHTML = "<source src=" + reader.result + " type=\"video/mp4\">"
+        }
+   }
+
+   function restoreStoryField() {
+       var storyField = document.getElementById("storyField");
+       storyField.placeholder = "Story text";
+       storyField.style.border = "";
+   }
+
+   function submitStory() {
+       var xmlhttp = new XMLHttpRequest();
+       var author = document.getElementById("nameField").value;
+       var contact = document.getElementById("contactField").value;
+       var video = document.getElementById("video").currentSrc;
+       var story = document.getElementById("storyField").value.trim();
+
+       // http://rabbit.eng.miami.edu/info/htmlchars.html
+       story = story.replace("&#39;", "\'");
+
+       if(story == "") {
+           // cannot be shown!
+           var storyField =  document.getElementById("storyField");
+           storyField.style.border = "1px solid #ff0000";
+           storyField.placeholder = "Story text (required!)";
+           return;
+       }
+
+       if(author.trim() == "") {author="Anonymous";}
+
+       // var url = `/send_data?story=${story}&author=${author}&contact=${contact}&video=${video}` lol nope
+       var url = `/send_data?story=${story}&author=${author}&contact=${contact}`;
+       xmlhttp.open("POST", url, true);
+       // xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+       xmlhttp.send(null);
+       xmlhttp.onload = function () {
+           window.location.href = "/submitted";
+       };
+   }
+
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+ <!DOCTYPE HTML>
+
+<html>
+  <body>
+
+    <style>
+        body {background-color: #323437;
+              font-family: Sans-Serif;
+              font-size: 3vw;}
+        nav {background-color: #fefefe;
+             width: 50%;}
+        hr {border: 2px solid #323437;}
+    </style>
+
+    <center><nav id="list">
+
+        <table>
+            {% for story in stories %}
+
+                <tr id={{ story[0] }}>
+                    <td>
+                        <p> {{ story[3] }} </p>
+                        <br>
+                        <p>Written by {{ story[2] }} </p>
+                        <p>Contact: {{ story[4] }} </p>
+                        <p>Story ID: {{ story[0] }} </p>
+                        <hr>
+                    </td>
+                </tr>
+
+                {# code to add video
+                    {% if story[6] != "" %}
+                        <video width = 50% height = auto controls>
+                            <source src=story[4].name type="video/mp4">
+                        </video>
+                    {% endif %}
+                #}
+
+            {% endfor %}
+        </table>
+
+    </nav></center>
+
+  </body>
+</html>
