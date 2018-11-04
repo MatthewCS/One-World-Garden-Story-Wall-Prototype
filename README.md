@@ -7,3 +7,5 @@ Create a database that allows the editing of a databse through a webserver
 
 ## Use
 The reason we created this was for usage in the One World Garden project. The code can be used to collect stories of refugees and members of our community who might not normally be heard. 
+
+Make sure that you run create_generic_data_set.py before any other files to avoid errors relating to tables not being made.
