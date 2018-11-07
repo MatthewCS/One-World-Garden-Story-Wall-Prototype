@@ -3,7 +3,7 @@ A simple project made for Hack Mohawk Valley. None of us are web devs by any str
 
 
 ## Objective
-Create a database that allows the editing of a databse through a webserver
+Create a database of stories that can be viewed and edited through a Flask webserver.
 
 ## Use
 The reason we created this was for usage in the One World Garden project. The code can be used to collect stories of refugees and members of our community who might not normally be heard. 
